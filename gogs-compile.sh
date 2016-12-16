@@ -1,11 +1,9 @@
 #!/bin/tcsh
 # Gogs compile script for FreeNAS
-echo "Fetching gogs from Github"
-su - git -c "setenv GOPATH /usr/home/git/go; go get -u github.com/gogits/gogs"
-echo "Getting gogs compile tags"
-su - git -c "setenv GOPATH /usr/home/git/go; cd /home/git/go/src/github.com/gogits/gogs; go get -u -tags 'sqlite redis memcache cert' github.com/gogits/gogs"
+echo "Fetching gogs from Github and Getting gogs compile tags"
+su - git -c "setenv GOPATH /usr/home/git/go; go get -u -v -tags 'sqlite redis memcache cert' github.com/gogits/gogs"
 echo "Compiling gogs"
-su - git -c "setenv GOPATH /usr/home/git/go; cd /home/git/go/src/github.com/gogits/gogs; go build -tags 'sqlite redis memcache cert'"
+su - git -c "setenv GOPATH /usr/home/git/go; cd /home/git/go/src/github.com/gogits/gogs; go build -v  -tags 'sqlite redis memcache cert'"
 echo "Copying gogs build to git home"
 su - git -c "cp -R /usr/home/git/go/src/github.com/gogits/gogs /home/git/"
 # Change ownership of everything in the git directory
